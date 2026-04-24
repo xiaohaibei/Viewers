@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plan 4 - 智能体价值定义书</title>
+    <style>
+      :root {
+        --bg: #f5f7fb;
+        --card: #ffffff;
+        --border: #dbe4f0;
+        --text: #16324f;
+        --subtext: #62758d;
+        --blue: #2f6feb;
+        --green: #1f8f5f;
+        --orange: #c97a10;
+        --purple: #6f42c1;
+        --red: #c24141;
+        --shadow: 0 10px 30px rgba(17, 43, 73, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      .mt-18{
+        margin-top: 18px;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+      }
+
+      .page {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .img-wrap {
+        margin-top: 10px;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .img-wrap img {
+        width: 49%;
+        float: left;
+        margin: 0 auto;
+        border-radius: 12px;
+        cursor: zoom-in;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .img-wrap img:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(17, 43, 73, 0.16);
+      }
+
+      .img-wrap img:first-child {
+        margin-right: 2%;
+      }
+
+      .image-preview {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(10, 19, 31, 0.78);
+        z-index: 9999;
+      }
+
+      .image-preview.is-open {
+        display: flex;
+      }
+
+      .image-preview img {
+        max-width: min(1200px, 92vw);
+        max-height: 88vh;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        background: #fff;
+      }
+
+      .image-preview-close {
+        position: absolute;
+        top: 20px;
+        right: 24px;
+        border: none;
+        background: rgba(255, 255, 255, 0.18);
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .hero {
+        background: linear-gradient(135deg, #ffffff, #eef4ff);
+        margin-bottom: 18px;
+      }
+
+      .hero h1 {
+        margin: 0 0 10px;
+        font-size: 34px;
+      }
+
+      .hero p {
+        margin: 0;
+        max-width: 980px;
+        color: var(--subtext);
+      }
+
+      .pill {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        margin: 0 8px 10px 0;
+      }
+
+      .pill.blue {
+        background: #eaf2ff;
+        color: var(--blue);
+      }
+
+      .pill.green {
+        background: #e9f8f1;
+        color: var(--green);
+      }
+
+      .pill.orange {
+        background: #fff4e5;
+        color: var(--orange);
+      }
+
+      .pill.purple {
+        background: #f1ebff;
+        color: var(--purple);
+      }
+
+      .pill.red {
+        background: #fdecec;
+        color: var(--red);
+      }
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        display: grid;
+        gap: 16px;
+        margin-top: 18px;
+      }
+
+      .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      h2 {
+        margin: 0 0 8px;
+        font-size: 22px;
+      }
+
+      h3 {
+        margin: 0 0 8px;
+        font-size: 17px;
+      }
+
+      .sub {
+        margin: 0 0 12px;
+        color: var(--subtext);
+        font-size: 13px;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      li {
+        margin-bottom: 6px;
+      }
+
+      .metric {
+        font-size: 30px;
+        font-weight: 800;
+        color: var(--blue);
+        margin-bottom: 4px;
+      }
+
+      .metric.green {
+        color: var(--green);
+      }
+
+      .metric.orange {
+        color: var(--orange);
+      }
+
+      .metric.purple {
+        color: var(--purple);
+      }
+
+      .panel {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 16px;
+      }
+
+      .cost-table {
+        width: 100%;
+        margin-top: 10px;
+        border-collapse: collapse;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        font-size: 14px;
+      }
+
+      .cost-table th,
+      .cost-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .cost-table th {
+        background: #f6f9ff;
+        font-weight: 700;
+      }
+
+      .cost-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .cost-summary {
+        margin-top: 10px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: #f8fbff;
+        border: 1px solid #dbe7ff;
+        color: var(--subtext);
+        font-size: 13px;
+      }
+
+      .demo-video {
+        margin-top: 12px;
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+        width: 50%;
+        margin: 0 auto;
+      }
+
+      .demo-video video {
+        display: block;
+        width: 100%;
+        border-radius: 12px;
+        background: #000;
+        box-shadow: 0 10px 24px rgba(17, 43, 73, 0.12);
+      }
+
+      .demo-video .note {
+        margin-top: 10px;
+      }
+
+      .compare {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .compare .panel:first-child {
+        background: #fffaf5;
+      }
+
+      .compare .panel:last-child {
+        background: #f4fbf7;
+      }
+
+      .formula {
+        margin-top: 10px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: #f6f9ff;
+        border: 1px solid #dbe7ff;
+        color: var(--text);
+        font-size: 14px;
+      }
+
+      .note {
+        margin-top: 12px;
+        color: var(--subtext);
+        font-size: 13px;
+      }
+
+      @media (max-width: 980px) {
+        .grid-2,
+        .grid-3,
+        .grid-4,
+        .compare {
+          grid-template-columns: 1fr;
+        }
+
+        .img-wrap img,
+        .img-wrap img:first-child {
+          width: 100%;
+          float: none;
+          margin-right: 0;
+          margin-bottom: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="card hero">
+        <span class="pill blue">智能体价值定义书</span>
+        <span class="pill purple">进件场景</span>
+        <span class="pill green">ROI 可量化</span>
+        <h1>智能录入助手</h1>
+        <p>
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>1、背景与痛点</h2>
+        <p class="sub">业务现状、能力基础与切入机会</p>
+        <ul>
+          <li>表单填写、录入慢，容易出错，资料来源杂，相同资料需要反复录</li>
+          <li>初期产品已上线，用户反馈良好</li>
+        </ul>
+      </section>
+      <section class="card mt-18">
+        <h2>2、市场机会</h2>
+        <div class="cost-summary">
+          根据 2025-2026 年的行业数据，AI 浏览器插件市场正处于爆发期： <br />
+          市场规模： 全球 AI Chrome 插件市场在 2025 年估值约为 28 亿美元，预计到 2034 年将达到 116 亿美元，复合年增长率（CAGR）高达 17.1%。 <br />
+          细分领域： 生产力工具占据了约 38.4% 的份额，是规模最大且变现最快的赛道。 <br />
+          技术红利： 随着大模型（LLM）推理成本在过去两年下降了约 78%，开发高逻辑性、高准确度的智能录入工具在经济上变得极其可行。 <br />
+        </div>
+        
+
+        <p class="mt-18">目前市场上已有的解决方案</p>
+        <section class="grid-2">
+          <article class="card">
+            <strong>AIFII自动填表助手</strong>
+            <div class="cost-summary">
+              一款基于AI技术的自动填表工具，可以帮助用户快速、随机生成字段填写表单<br />
+              <strong>缺点：</strong>无法按客户需求填写表单
+            </div>
+            <div class="img-wrap">
+              <img src="./images/AIFill-ui.png" alt="">
+              <img src="./images/AIFill-pay.png" alt="">
+            </div>
+          </article>
+          <article class="card">
+            <strong>tapicker塔皮克-浏览器网页自动化数据采集器</strong>
+            <div class="cost-summary">
+              数据抓取、数据采集，以及从网站导出数据到 Excel<br />
+              <strong>缺点：</strong>界面过于复杂，收费高
+            </div>
+            <div class="img-wrap">
+              <img src="./images/tapicker-ui.png" alt="">
+              <img src="./images/tapicker-pay.png" alt="">
+            </div>
+          </article>
+        </section>
+      </section>
+      <section class="card mt-18">
+        <h2>3、产品演示</h2>
+        <section class="grid-2">
+          <article class="card">
+            <div class="demo-video">
+              <video controls preload="metadata">
+                <source src="./images/demo.mp4" type="video/mp4" />
+                <source src="./images/demo.mp4" type="video/mp4" />
+                当前浏览器不支持视频播放，请直接打开 demo.4 视频文件查看。
+              </video>
+            </div>
+          </article>
+          <article class="card">
+            <a class="sub" href="http://xdtest.kingdee.com:9888/order/#/" target="_blank">小贷进件系统 </a><br />
+            <a class="sub" href="https://loan.kdbank.cn/finPartnerPc/#/" target="_blank">效贷合伙人pc端</a>
+          </article>
+         
+        </section>
+        
+      </section>
+      <section class="card mt-18">
+        <h2>4、产品价值</h2>
+        <section class="grid-4">
+          <article class="card">
+            <h3>识别到回填形成闭环</h3>
+            <p class="sub">具备表单识别、字段映射、智能解析和自动回填能力，不只是识别资料，而是直接落到录单结果。界面清晰，操作简单，一键识别回填</p>
+          </article>
+          <article class="card">
+            <h3>自动化拆解映射</h3>
+            <p class="sub">将凌乱的数据源，如聊天记录、身份证照片、营业执照、征信报告和截图等，自动映射至标准化表单</p>
+          </article>
+          <article class="card">
+            <h3>接入成本低，适合快速切入</h3>
+            <p class="sub">浏览器插件和 UI SDK 都可以作为入口，无需客户重做整套系统页面，适合先试点、后放量。</p>
+          </article>
+          
+          <article class="card">
+            <h3>可从工具收入升级到企业收入</h3>
+            <p class="sub">
+              做私有化：满足企业合规的端侧方案 <br />
+              垂直行业的 RPA/Agent（业务深度定制）：如专门针对跨境电商，解决“从 1688 抓取商品数据，自动翻译并洗稿，然后一键填入 Shopify 后台上架”的全链路工作流解决
+            </p>
+          </article>
+        </section>
+
+        <h3 class="mt-18">初期目标：</h3>
+        <section class="grid-4">
+          <article class="card">
+            <div class="metric">85%+</div>
+            <div class="sub">单件录入时间下降目标</div>
+          </article>
+          <article class="card">
+            <div class="metric green">90%+</div>
+            <div class="sub">关键字段准确率目标</div>
+          </article>
+          <article class="card">
+            <div class="metric orange">20%</div>
+            <div class="sub">补件/返工下降空间</div>
+          </article>
+          <article class="card">
+            <div class="metric orange">多格式支持</div>
+            <div class="sub">支持图片、文档、表格等文件类型</div>
+          </article>
+        </section>
+      </section>
+      
+      <section class="card mt-18">
+        <h2>5、用户画像与获客策略</h2>
+        <section class="grid-2">
+          <article class="card">
+            <h2>真实用户画像</h2>
+          <p class="sub">谁最先高频使用，并最容易感知价值</p>
+            <ul>
+            <li><strong>录单员/进件专员：</strong>第一核心用户。每天高频录入客户资料，最能直接感受到“录得更快、复制更少、返工更少”的价值。</li>
+            <li><strong>运营/补件专员：</strong>第二核心用户。围绕材料核对、缺漏检查、补件跟进开展工作，最看重信息是否完整、字段是否准确、提单是否更顺畅。</li>
+            <li><strong>团队主管/负责人：</strong>关键决策用户。关注的不是单次操作，而是整体人效提升、新人更快上手，以及补件率和返工率下降带来的 ROI。</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h2>如何获客</h2>
+            <ul>
+              <li><strong>首个切入场景: </strong>当前合伙人、代理人等有代录入需求的页面增加智能录入UI SDK，并添加下载浏览器插件按钮（前100客户）</li>
+              <li><strong>分享获客：</strong>邀请注册，即可提升对话次数（1000+客户）</li>
+              <li><strong>小红书等软文推广: </strong>浏览器便捷工具，智能文本录入，解放双手（更多客户）</li>
+            </ul>
+          </article>
+        </section>
+      </section>
+      
+
+      
+
+      <section class="card mt-18">
+        <h2>6. 预期可量化的商业价值</h2>
+        <p class="sub">收益与成本 ROI 测算框架</p>
+        <div class="grid-2" style="margin-top: 0;">
+          <div class="panel">
+            <h3>成本侧</h3>
+            <table class="cost-table">
+              <thead>
+                <tr>
+                  <th style="width: 20%;" >费用项</th>
+                  <th style="width: 15%;">当前预估</th>
+                  <th style="width: 30%;">说明</th>
+                  <th style="width: 35%;">成本合计</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>开发费用</td>
+                  <td>30 人天</td>
+                  <td>
+                    开发 15人天  <br />
+                    测试 10人天 <br />
+                    运维估算 5人天 
+                  </td>
+                  <td>1-3万</td>
+                </tr>
+                <tr>
+                  <td>大模型调用费用</td>
+                  <td>按量计费</td>
+                  <td>千问token</td>
+                  <td>初期200元，后期费用随识别调用量增长</td>
+                </tr>
+                <tr>
+                  <td>通用图片识别费用</td>
+                  <td>按量计费</td>
+                  <td>qwen-vl-ocr token</td>
+                  <td>初期300元，后期费用随OCR调用量增长</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="cost-summary">
+              固定投入以 3 人月为主，模型与 OCR 成本按实际调用量线性增加，初期成本较低，后期成本随调用量增长。
+            </div>
+            <div class="img-wrap">
+              <img src="./images/qianwen-llm.png" alt="">
+              <img src="./images/qianwen-ocr.png" alt="">
+            </div>
+            
+          </div>
+          <div class="panel">
+            <h3>收益侧预期</h3>
+            <section class="grid-3">
+              <article class="card">
+                <div class="metric">会员订阅</div>
+                <div class="sub">9.9元/人/月</div>
+              </article>
+              <article class="card" style="padding-left: 18px;padding-right: 10px;">
+                <div class="metric green">私有化定制</div>
+                <div class="sub">按调用量收费</div>
+              </article>
+              <article class="card">
+                <div class="metric orange">内部使用</div>
+                <div class="sub">增加客户粘性</div>
+              </article>
+            </section>
+
+            <table class="cost-table">
+              <thead>
+                <tr>
+                  <th width="15%">收益项</th>
+                  <th width="15%">当前测算</th>
+                  <th width="40%">说明</th>
+                  <th width="25%">版本</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>会员订阅制</td>
+                  <td>人数 x 9.9 元 / 月</td>
+                  <td>
+                    基础版：免费（限制填充次数 如50次/天）<br />
+                    专业版：按月/年付费，解锁无限次填充、多端同步、多格式支持。
+                  </td>
+                  <td>免费插件版、个人会员版、团队版</td>
+                </tr>
+                <tr>
+                  <td>行业定制方案</td>
+                  <td>按调用量阶梯收费</td>
+                  <td>
+                    API调用，组合公司其他AI产品售卖。<br />
+                    提供合规要求的私有化版本，单客户价值高
+                  </td>
+                  <td>SDK/API版、API版、私有化版</td>
+                </tr>
+                <tr>
+                  <td>内部使用</td>
+                  <td>间接收益</td>
+                  <td>通过提效、提升客户体验，增加客户粘性</td>
+                  <td>SDK/API版</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="cost-summary">
+          <h3>客户侧ROI测算</h3>
+          <table class="cost-table">
+            <thead>
+              <tr>
+                <th>测算项</th>
+                <th>数值</th>
+                <th>说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>单人日录入量</td>
+                <td>20 笔</td>
+                <td>以 1 名录单员为例</td>
+              </tr>
+              <tr>
+                <td>单笔节省时间</td>
+                <td>1.5 分钟</td>
+                <td>使用智能录入后平均节省时间</td>
+              </tr>
+              <tr>
+                <td>1 人 1 天节省时间</td>
+                <td>30 分钟</td>
+                <td>20 笔 x 1.5 分钟</td>
+              </tr>
+              <tr>
+                <td>1 人每月节省时间</td>
+                <td>660 分钟 / 11 小时</td>
+                <td>按 22 个工作日计算</td>
+              </tr>
+            </tbody>
+          </table>
+          注：以上尚未计入错填漏填减少、补件率下降和客户体验提升带来的额外收益。
+        </div>
+        <div class="cost-summary">
+          <h3>ROI测算</h3>
+          <table class="cost-table">
+            <thead>
+              <tr>
+                <th>指标</th>
+                <th>测算结果</th>
+                <th>说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>收益口径</td>
+                <td>会员订阅 + 按量计费 + 内部增值</td>
+                <td>先形成基础现金流，再放大增量收益</td>
+              </tr>
+              <tr>
+                <td>月度运营成本</td>
+                <td>500 元</td>
+                <td>初期文本识别 200 元 + 图片识别 300 元</td>
+              </tr>
+              <tr>
+                <td>免费用户承载量</td>
+                <td>1500-1800 人</td>
+                <td>按当前初期调用成本估算</td>
+              </tr>
+              <tr>
+                <td>收支平衡点</td>
+                <td>51 人</td>
+                <td>500 / 9.9 = 50.5，向上取整</td>
+              </tr>
+              <tr>
+                <td>转化率目标</td>
+                <td>2.8%+</td>
+                <td>按免费用户转付费会员测算</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <div class="image-preview" id="imagePreview" aria-hidden="true">
+      <button class="image-preview-close" id="imagePreviewClose" type="button" aria-label="关闭预览">&times;</button>
+      <img id="imagePreviewTarget" src="" alt="图片预览">
+    </div>
+    <script>
+      (function () {
+        const preview = document.getElementById("imagePreview");
+        const previewTarget = document.getElementById("imagePreviewTarget");
+        const closeButton = document.getElementById("imagePreviewClose");
+        const previewImages = document.querySelectorAll(".img-wrap img");
+
+        function closePreview() {
+          preview.classList.remove("is-open");
+          preview.setAttribute("aria-hidden", "true");
+          previewTarget.src = "";
+          previewTarget.alt = "图片预览";
+          document.body.style.overflow = "";
+        }
+
+        previewImages.forEach((img) => {
+          img.addEventListener("click", function () {
+            previewTarget.src = img.src;
+            previewTarget.alt = img.alt || "图片预览";
+            preview.classList.add("is-open");
+            preview.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+          });
+        });
+
+        closeButton.addEventListener("click", closePreview);
+
+        preview.addEventListener("click", function (event) {
+          if (event.target === preview) {
+            closePreview();
+          }
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && preview.classList.contains("is-open")) {
+            closePreview();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

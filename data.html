@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plan 4 - 智能体价值定义书</title>
+    <style>
+      :root {
+        --bg: #f5f7fb;
+        --card: #ffffff;
+        --border: #dbe4f0;
+        --text: #16324f;
+        --subtext: #62758d;
+        --blue: #2f6feb;
+        --green: #1f8f5f;
+        --orange: #c97a10;
+        --purple: #6f42c1;
+        --red: #c24141;
+        --shadow: 0 10px 30px rgba(17, 43, 73, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      .mt-18{
+        margin-top: 18px;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+      }
+
+      .page {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .img-wrap {
+        margin-top: 10px;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .img-wrap img {
+        width: 49%;
+        float: left;
+        margin: 0 auto;
+        border-radius: 12px;
+        cursor: zoom-in;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .img-wrap img:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(17, 43, 73, 0.16);
+      }
+
+      .img-wrap img:first-child {
+        margin-right: 2%;
+      }
+
+      .image-preview {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(10, 19, 31, 0.78);
+        z-index: 9999;
+      }
+
+      .image-preview.is-open {
+        display: flex;
+      }
+
+      .image-preview img {
+        max-width: min(1200px, 92vw);
+        max-height: 88vh;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        background: #fff;
+      }
+
+      .image-preview-close {
+        position: absolute;
+        top: 20px;
+        right: 24px;
+        border: none;
+        background: rgba(255, 255, 255, 0.18);
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .hero {
+        background: linear-gradient(135deg, #ffffff, #eef4ff);
+        margin-bottom: 18px;
+      }
+
+      .hero h1 {
+        margin: 0 0 10px;
+        font-size: 34px;
+      }
+
+      .hero p {
+        margin: 0;
+        max-width: 980px;
+        color: var(--subtext);
+      }
+
+      .pill {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        margin: 0 8px 10px 0;
+      }
+
+      .pill.blue {
+        background: #eaf2ff;
+        color: var(--blue);
+      }
+
+      .pill.green {
+        background: #e9f8f1;
+        color: var(--green);
+      }
+
+      .pill.orange {
+        background: #fff4e5;
+        color: var(--orange);
+      }
+
+      .pill.purple {
+        background: #f1ebff;
+        color: var(--purple);
+      }
+
+      .pill.red {
+        background: #fdecec;
+        color: var(--red);
+      }
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        display: grid;
+        gap: 16px;
+        margin-top: 18px;
+      }
+
+      .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      h2 {
+        margin: 0 0 8px;
+        font-size: 22px;
+      }
+
+      h3 {
+        margin: 0 0 8px;
+        font-size: 17px;
+      }
+
+      .sub {
+        margin: 0 0 12px;
+        color: var(--subtext);
+        font-size: 13px;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      li {
+        margin-bottom: 6px;
+      }
+
+      .metric {
+        font-size: 30px;
+        font-weight: 800;
+        color: var(--blue);
+        margin-bottom: 4px;
+      }
+
+      .metric.green {
+        color: var(--green);
+      }
+
+      .metric.orange {
+        color: var(--orange);
+      }
+
+      .metric.purple {
+        color: var(--purple);
+      }
+
+      .panel {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 16px;
+      }
+
+      .cost-table {
+        width: 100%;
+        margin-top: 10px;
+        border-collapse: collapse;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        font-size: 14px;
+      }
+
+      .cost-table th,
+      .cost-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .cost-table th {
+        background: #f6f9ff;
+        font-weight: 700;
+      }
+
+      .cost-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .cost-summary {
+        margin-top: 10px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: #f8fbff;
+        border: 1px solid #dbe7ff;
+        color: var(--subtext);
+        font-size: 13px;
+      }
+
+      .demo-video {
+        margin-top: 12px;
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+        width: 50%;
+        margin: 0 auto;
+      }
+
+      .demo-video video {
+        display: block;
+        width: 100%;
+        border-radius: 12px;
+        background: #000;
+        box-shadow: 0 10px 24px rgba(17, 43, 73, 0.12);
+      }
+
+      .demo-video .note {
+        margin-top: 10px;
+      }
+
+      .compare {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .compare .panel:first-child {
+        background: #fffaf5;
+      }
+
+      .compare .panel:last-child {
+        background: #f4fbf7;
+      }
+
+      .formula {
+        margin-top: 10px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: #f6f9ff;
+        border: 1px solid #dbe7ff;
+        color: var(--text);
+        font-size: 14px;
+      }
+
+      .note {
+        margin-top: 12px;
+        color: var(--subtext);
+        font-size: 13px;
+      }
+
+      @media (max-width: 980px) {
+        .grid-2,
+        .grid-3,
+        .grid-4,
+        .compare {
+          grid-template-columns: 1fr;
+        }
+
+        .img-wrap img,
+        .img-wrap img:first-child {
+          width: 100%;
+          float: none;
+          margin-right: 0;
+          margin-bottom: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <p>https://loan.kdbank.cn/finPartnerPc/#/</p>
+      <p>演示数据：19128329508</p>
+      <p>
+
+      婚姻状况: 未婚 <br />
+      现住房居住状况: 自有住房(有贷款) <br />
+      居住地址: 江苏省南京市鼓楼区<br />
+      居住详细地址: 江苏省南京市鼓楼区中山北路18号 <br />   
+      学历: 本科<br />
+      学位: 学士<br />
+      紧急联系人与借款人关系: 子女
+      紧急联系人姓名: 张明华<br />
+      紧急联系人手机号: 15201387456<br />
+      </p>
+      
+      <p>http://xdtest.kingdee.com:9888/order/#/</p>
+      <p>ht_2024  Kdbank123!</p>
+      <p>
+      客户类型：个人客户（固定）<br />
+      客户名称：张三<br />
+      证件类型：居民身份证<br />
+      证件有效期：2020-01-01 至 2030-01-01（常见十年期）<br />
+      性别：男<br />
+      户籍所在地：江苏省南京市鼓楼区<br />
+      户籍详细地址：江苏省南京市鼓楼区中山北路18号<br />
+      婚姻状况：未婚<br />
+      居住地址所在地：上海市 市辖区 浦东新区<br />
+      现居住详细地址：上海市浦东新区世纪大道100号上海环球金融中心32层3205室<br />
+      学历：大学本科<br />
+      学位： 学士<br />
+      居住状况：自有住房（无贷款）<br />  
+      身份证号码：32010519920315663X（随机生成，符合校验规则）<br />
+      证件签发机关：南京市公安局鼓楼分局<br />
+      手机号：15921678453<br />
+      居住地址所在地：上海市-市辖区-浦东新区<br />
+      就业状况：农民<br />
+      房产证书编号：沪（2020）长字不动产权第0000001号<br />
+      房产所在地: 江苏省南京市鼓楼区<br />
+      房产详细地址：江苏省南京市鼓楼区中山北路18号<br />
+      房产评估机构：房产评估机构999<br />
+      房产评估价格（元）：2000000.0<br />
+      抵押顺位：一押
+      </p>
+      
+      秒速通数据看板： http://172.18.64.102:4001/collection/99
+    </main>
+    <div class="image-preview" id="imagePreview" aria-hidden="true">
+      <button class="image-preview-close" id="imagePreviewClose" type="button" aria-label="关闭预览">&times;</button>
+      <img id="imagePreviewTarget" src="" alt="图片预览">
+    </div>
+    <script>
+      (function () {
+        const preview = document.getElementById("imagePreview");
+        const previewTarget = document.getElementById("imagePreviewTarget");
+        const closeButton = document.getElementById("imagePreviewClose");
+        const previewImages = document.querySelectorAll(".img-wrap img");
+
+        function closePreview() {
+          preview.classList.remove("is-open");
+          preview.setAttribute("aria-hidden", "true");
+          previewTarget.src = "";
+          previewTarget.alt = "图片预览";
+          document.body.style.overflow = "";
+        }
+
+        previewImages.forEach((img) => {
+          img.addEventListener("click", function () {
+            previewTarget.src = img.src;
+            previewTarget.alt = img.alt || "图片预览";
+            preview.classList.add("is-open");
+            preview.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+          });
+        });
+
+        closeButton.addEventListener("click", closePreview);
+
+        preview.addEventListener("click", function (event) {
+          if (event.target === preview) {
+            closePreview();
+          }
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && preview.classList.contains("is-open")) {
+            closePreview();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
